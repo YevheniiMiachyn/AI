@@ -41,17 +41,37 @@ public class Cockpit {
 		
 	}
 	
+	/**
+	 * Autoassociative memory when able recognize object by
+	 * it's incomplete representation.
+	 * 
+	 **/
 	private static void fireHopfieldNetwork() {
+		/********
+		 * 1 1 1           1 1 1
+		 * 1 0 0  - C      0 1 0  - T
+		 * 1 1 1           0 1 0 
+		 * ******       
+		 */
 		RealVector c = new ArrayRealVector(new double[] {1,1,1,1,0,0,1,1,1});
 		RealVector t = new ArrayRealVector(new double[] {1,1,1,0,1,0,0,1,0});
 		
 		RealVector noisyC = new ArrayRealVector(new double[] {1,1,0,1,0,0,1,1,0});
 		RealVector noisyT = new ArrayRealVector(new double[] {1,1,1,0,1,1,0,1,0});
+		
+		// 9x9 Matrix to hold 9 digit letter representations
 		HopfieldNetwork hn = new HopfieldNetwork(9);
+		//train NN to recognize correct c and t
 		hn.train(c);
 		hn.train(t);
-				
-		System.out.println(hn.recall(noisyC));
+		
+		/*
+		 * feed incomplete (noisy) representations 
+		 * and verify that autoassociative memory is working
+		 * if returned vector is for complete version of a letter
+		 */
+		System.out.println("Found for noisy C: " + hn.recall(noisyC));
+		System.out.println("Found for noisy T: " + hn.recall(noisyT));
 		
 	}
 
