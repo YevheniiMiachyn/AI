@@ -21,6 +21,7 @@ import com.ymiachyn.algorithms.tabusearch.CostFunction;
 import com.ymiachyn.algorithms.tabusearch.State;
 import com.ymiachyn.algorithms.tabusearch.TabuSearch;
 import com.ymiachyn.neural.hopfield.HopfieldNetwork;
+import com.ymiachyn.neural.singlelayer.Perceptron;
 
 import static com.ymiachyn.Constants.NUM_VALUES;
 
@@ -37,10 +38,43 @@ public class Cockpit {
 		
 		//fireParticleSwarmOptimization();
 		
-		fireHopfieldNetwork();
+		//fireHopfieldNetwork();
+		
+		fireSingleLayerNetwork();
 		
 	}
 	
+	
+	/**
+	 * Just to demonstrate main idea of neural network
+	 * we train it to 'predict' correct result instead
+	 * The example is simple, but it predicts - not matching like key/value!
+	 *
+	 */
+	private static void fireSingleLayerNetwork() {
+		/*
+		 * train to predict for boolean operator OR
+		 * 
+		 * Not going to work for XOR because XOR is non-linear function
+		 * Single layer Neural Networks works only for linear functions
+		 */
+		float[][] input = { {0,0}, {0,1}, {1,0}, {1,1} };
+		float[] output = {0,1,1,0};
+		
+		Perceptron perceptron = new Perceptron(input, output);
+		perceptron.train(0.21f);
+		
+		System.out.println("The error is 0 so our neural network is ready! Predictions: ");
+		
+		System.out.println(perceptron.calculateOutput(new float[]{0,0}));
+		System.out.println(perceptron.calculateOutput(new float[]{0,1}));
+		System.out.println(perceptron.calculateOutput(new float[]{1,0}));
+		System.out.println(perceptron.calculateOutput(new float[]{1,1}));
+		
+	}
+
+
+
 	/**
 	 * Autoassociative memory when able recognize object by
 	 * it's incomplete representation.
