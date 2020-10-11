@@ -32,4 +32,12 @@ public class Constants {
 	public static final double MAX_TEMPERATURE = 100;
 	public static final double COOLING_RATE = 0.02;
 	
+	/**
+	 * Back propagation neural network
+	 */
+	
+	public static final float LEARNING_RATE = 0.3f;
+	public static final float MOMENTUM = 0.6f;
+	public static final int ITERATIONS = 100000; 
+	
 }

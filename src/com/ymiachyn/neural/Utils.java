@@ -36,5 +36,42 @@ public class Utils {
 		
 		return returnValue;
 	}
+	
+	/**
+	 * Sigmoid activation function
+	 * 
+	 * @param x
+	 * @return
+	 */
+	public static float sigmoid(float x) {
+		return (float) (1/(1 + Math.exp(-x)));
+	}
+	
+	/**
+	 * Derivative sigmoid function
+	 * 
+	 * @param sigmoid
+	 * @return
+	 */
+	public static float dSigmoid(float sigmoid) {
+		return sigmoid * (1 - sigmoid);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

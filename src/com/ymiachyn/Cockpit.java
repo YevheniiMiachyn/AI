@@ -20,10 +20,14 @@ import com.ymiachyn.algorithms.sa.SimulatedAnnealing;
 import com.ymiachyn.algorithms.tabusearch.CostFunction;
 import com.ymiachyn.algorithms.tabusearch.State;
 import com.ymiachyn.algorithms.tabusearch.TabuSearch;
+import com.ymiachyn.neural.backprop.BackpropNeuralNetwork;
 import com.ymiachyn.neural.hopfield.HopfieldNetwork;
 import com.ymiachyn.neural.singlelayer.Perceptron;
 
 import static com.ymiachyn.Constants.NUM_VALUES;
+import static com.ymiachyn.Constants.LEARNING_RATE;
+import static com.ymiachyn.Constants.MOMENTUM;
+import static com.ymiachyn.Constants.ITERATIONS;
 
 public class Cockpit {
 	
@@ -40,11 +44,51 @@ public class Cockpit {
 		
 		//fireHopfieldNetwork();
 		
-		fireSingleLayerNetwork();
+		//fireSingleLayerNetwork();
+		fireBackpropagationNetwork();
 		
 	}
 	
 	
+	private static void fireBackpropagationNetwork() {
+		
+		/*
+		 * data for XOR logical relations (cannot be solved with single layer perceptrons,
+		 * but adding hidden layer like at BPN - allows to solve non-linear problems
+		 */
+		float[][] trainingData = new float[][] {
+			new float[] {0, 0},
+			new float[] {0, 1},
+			new float[] {1, 0},
+			new float[] {1, 1}
+		};
+		
+		float[][] trainingResults = new float[][] {
+				new float[] {0},
+				new float[] {1},
+				new float[] {1},
+				new float[] {0}	
+		};
+		
+		BackpropNeuralNetwork bnn = new BackpropNeuralNetwork(2, 3, 1);
+		for(int iteration = 0; iteration < ITERATIONS; iteration++)
+		{
+			System.out.println("\n# of iterations: " + (iteration + 1));
+			for (int i = 0; i < trainingResults.length; i++) {
+				bnn.train(trainingData[i], trainingResults[i], LEARNING_RATE, MOMENTUM);
+			}
+			
+			System.out.println();
+			
+			for (int i = 0; i < trainingResults.length; i++) {
+				float[] t = trainingData[i];
+				
+				System.out.printf("%.1f, %.1f --> %.3f\n", t[0], t[1], bnn.run(t)[0]);
+			}
+		}
+	}
+
+
 	/**
 	 * Just to demonstrate main idea of neural network
 	 * we train it to 'predict' correct result instead
