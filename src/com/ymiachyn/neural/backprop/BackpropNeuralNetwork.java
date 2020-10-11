@@ -22,6 +22,14 @@ public class BackpropNeuralNetwork {
 		layers[1] = new Layer(hiddenSize, outputSize);
 	}
 	
+	public BackpropNeuralNetwork(int inputSize, int[] layersSize) {
+		layers = new Layer[layersSize.length];
+		for (int i = 0; i < layersSize.length; i++) {
+			int inSize = i == 0 ? inputSize : layersSize[i - 1];
+			layers[i] = new Layer(inSize, layersSize[i]);
+		}
+	}
+	
 	public Layer getLayer(int idx) {
 		return layers[idx];
 	}

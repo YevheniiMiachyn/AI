@@ -1,8 +1,16 @@
 package com.ymiachyn;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
@@ -45,11 +53,121 @@ public class Cockpit {
 		//fireHopfieldNetwork();
 		
 		//fireSingleLayerNetwork();
-		fireBackpropagationNetwork();
-		
+		//fireBackpropagationNetwork();
+		fireBackpropagationNetworkIris();
 	}
 	
+	/**
+	 * Train NN to solve classification problem on the 
+	 * Iris data set - (identify different types of Iris
+	 * 
+	 * https://archive.ics.uci.edu/ml/datasets/iris
+	 * 
+	 */
+	private static void fireBackpropagationNetworkIris() {
+		float[][] trainingData = null;
+		float[][] trainingResults = null;
+			
+		List<float[][]> data = loadTrainingData();
+		trainingData = data.get(0);
+		trainingResults = data.get(1);
+		
+		BackpropNeuralNetwork bnn = new BackpropNeuralNetwork(4, new int[]{6, 3});
+		for(int iteration = 0; iteration < ITERATIONS; iteration++)
+		{			
+			for (int i = 0; i < trainingResults.length; i++) {
+				bnn.train(trainingData[i], trainingResults[i], LEARNING_RATE, MOMENTUM);
+			}
+			
+			if((iteration + 1) % 10000 == 0)
+			{
+				System.out.println("Iteration #: " + iteration);
+				for (int i = 0; i < trainingResults.length; i++) {
+					
+					String outputAsString;
+					float[] tData = trainingData[i];
+					float[] out = bnn.run(tData);
+					
+					//convert data from binary representation
+					if(Math.round(out[0]) == 1 && Math.round(out[1]) == 0 && Math.round(out[2]) == 0)
+						outputAsString = "Iris-setosa";
+					else if(Math.round(out[0]) == 0 && Math.round(out[1]) == 1 && Math.round(out[2]) == 0)
+						outputAsString = "Iris-versicolor";
+					else if(Math.round(out[0]) == 0 && Math.round(out[1]) == 0 && Math.round(out[2]) == 1)
+						outputAsString = "Iris-virginica";
+					else 
+						outputAsString = "Unknown species of Iris!";
+									
+					//there are some error results but that's OK - error rate is small
+					System.out.println(Arrays.toString(tData) + " --> " + outputAsString); 
+				}
+			}
+		}
+	}
 	
+	private static List<float[][]> loadTrainingData() 
+	{
+		float[][] iData = null, iResults = null;
+		
+		try(BufferedReader br = Files.newBufferedReader(Paths.get(".\\resources\\iris.data")))
+		{			
+			List<float[]> data = new ArrayList<>();
+			List<float[]> result = new ArrayList<>();
+			
+			br.lines().forEach(line -> {
+				if(!line.trim().isEmpty()) {
+					//split line into parameters
+					String[] params = line.split(",");
+					
+					//define array to hold parsed params as floats
+					int elementsCnt = (params.length - 1);
+					float[] dataSet = new float[elementsCnt];
+					
+					//populate dataSet with floats
+					for (int i = 0; i < elementsCnt; i++) {
+						dataSet[i] = Float.parseFloat(params[i].trim());
+					}
+					
+					data.add(dataSet);
+					
+					//populate result dataSet with matching result - binary representation
+					switch(params[elementsCnt]){
+						case "Iris-setosa":
+							result.add(new float[] {1f, 0f, 0f});
+						break;
+						
+						case "Iris-versicolor":
+							result.add(new float[] {0f, 1f, 0f});
+						break;
+						
+						case "Iris-virginica":
+							result.add(new float[] {0f, 0f, 1f});
+						break;
+						
+						default:
+						break;
+					}
+				}
+		    });
+			
+			//adding parsed data to 2d arrays 
+			iData = new float[data.size()][];
+			iResults = new float[data.size()][];
+			
+			for (int i = 0; i < data.size(); i++) {
+				iData[i] = data.get(i);
+				iResults[i] = result.get(i);
+			}
+		}		
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		//return loaded/transformed data
+		return Arrays.asList(iData, iResults);
+	}
+
+
 	private static void fireBackpropagationNetwork() {
 		
 		/*
