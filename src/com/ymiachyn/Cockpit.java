@@ -1,16 +1,17 @@
 package com.ymiachyn;
 
+import static com.ymiachyn.Constants.ITERATIONS;
+import static com.ymiachyn.Constants.LEARNING_RATE;
+import static com.ymiachyn.Constants.MOMENTUM;
+import static com.ymiachyn.Constants.NUM_VALUES;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
@@ -19,6 +20,7 @@ import com.ymiachyn.algorithms.AStarSearch;
 import com.ymiachyn.algorithms.BreadthFirstSearch;
 import com.ymiachyn.algorithms.DepthFirstSearch;
 import com.ymiachyn.algorithms.IterativeDeepeningDepthFirstSearch;
+import com.ymiachyn.algorithms.MazeSolver;
 import com.ymiachyn.algorithms.Vertex;
 import com.ymiachyn.algorithms.genetic.Constants;
 import com.ymiachyn.algorithms.genetic.GeneticAlgorithm;
@@ -32,16 +34,12 @@ import com.ymiachyn.neural.backprop.BackpropNeuralNetwork;
 import com.ymiachyn.neural.hopfield.HopfieldNetwork;
 import com.ymiachyn.neural.singlelayer.Perceptron;
 
-import static com.ymiachyn.Constants.NUM_VALUES;
-import static com.ymiachyn.Constants.LEARNING_RATE;
-import static com.ymiachyn.Constants.MOMENTUM;
-import static com.ymiachyn.Constants.ITERATIONS;
-
 public class Cockpit {
 	
 	public static void main(String[] args) {
 		//fireUpBreadthFirst();
 		//fireUpDepthFirstSearch();
+		findMazeExit();
 		//fireIDDFS();
 	    //fireAStarSearch();
 		//fireTabuSearch();
@@ -54,8 +52,21 @@ public class Cockpit {
 		
 		//fireSingleLayerNetwork();
 		//fireBackpropagationNetwork();
-		fireBackpropagationNetworkIris();
+		//fireBackpropagationNetworkIris();
 	}
+	
+	private static void findMazeExit() {
+		int[][] maze = {
+			{1,1,0,0,0,1},	
+			{2,0,0,1,1,1},
+			{1,1,0,1,1,1},
+			{1,1,0,0,0,0},
+			{0,0,0,1,0,1},
+			{1,1,0,1,0,0}
+		};
+		
+		new MazeSolver(maze, 1, 0).findWay();
+	};
 	
 	/**
 	 * Train NN to solve classification problem on the 
@@ -438,4 +449,5 @@ public class Cockpit {
 		
 		return vertexes;
 	}
+	
 }

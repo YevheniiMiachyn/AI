@@ -19,7 +19,7 @@ public class DepthFirstSearch {
 			}
 		});
 	}
-	
+		
 	private void dfsRecursive(Vertex v) {
 		System.out.println(v);
 		
