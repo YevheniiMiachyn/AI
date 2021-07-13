@@ -11,7 +11,7 @@ public class ParticleSwarm {
 
 	public ParticleSwarm() {
 		this.globalBestSolution = new double[Constants.NUM_DIMENSIONS];
-		this.particleSwarm = new Particle[Constants.NUM_PARTICALS];
+		this.particleSwarm = new Particle[Constants.NUM_PARTICLES];
 		generateRandomSolution();
 	}
 
@@ -82,7 +82,7 @@ public class ParticleSwarm {
 	 * Verify/update global best solution for each particles
 	 */
 	private void initializeSwarm() {
-		for (int i = 0; i < Constants.NUM_PARTICALS; ++i) {
+		for (int i = 0; i < Constants.NUM_PARTICLES; ++i) {
 
 			//random starting speed/velocity
 			double[] x = initializeLocation();

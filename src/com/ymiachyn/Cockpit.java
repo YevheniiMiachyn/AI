@@ -39,14 +39,14 @@ public class Cockpit {
 	public static void main(String[] args) {
 		//fireUpBreadthFirst();
 		//fireUpDepthFirstSearch();
-		findMazeExit();
+		//findMazeExit();
 		//fireIDDFS();
 	    //fireAStarSearch();
 		//fireTabuSearch();
 	    //fireSimulatedAnnealing();
 		//fireGeneticAlgorithm();
 		
-		//fireParticleSwarmOptimization();
+		fireParticleSwarmOptimization();
 		
 		//fireHopfieldNetwork();
 		

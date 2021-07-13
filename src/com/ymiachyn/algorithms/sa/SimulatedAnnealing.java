@@ -48,6 +48,12 @@ public class SimulatedAnnealing {
 			if(acceptanceProbability(actualEnergy, newEnergy, temperature) > Math.random()) {
 				currentCoordinateX = nextCoordinateX;
 			}
+			else
+			{
+				//cool system with 0.02 cooling rate each iteration
+				temperature *= 1 - COOLING_RATE;
+				continue;
+			}
 			
 			if(getEnergy(currentCoordinateX) < getEnergy(bestCoordinateX)) {
 				bestCoordinateX = currentCoordinateX;
@@ -61,6 +67,7 @@ public class SimulatedAnnealing {
 				getEnergy(bestCoordinateX)+"]");
 	}
 	
+	//generate random in range of min to max coordinates
 	private double getRandomX() {
 		return randomGenerator.nextDouble()*(MAX_COORDINATE-MIN_COORDINATE)+MIN_COORDINATE;
 	}
@@ -72,7 +79,7 @@ public class SimulatedAnnealing {
 	public double f(double x) {
 		return (x-0.3)*(x-0.3)*(x-0.3)-5*x+x*x-2;
 	}
-	
+		
 	public double acceptanceProbability(double energy, double newEnergy, double temperature) {
 		double acceptanceProbability;
 		
@@ -85,7 +92,12 @@ public class SimulatedAnnealing {
 			acceptanceProbability = 1;
 		}
 		else {
+			//Metropolis function
 			acceptanceProbability = Math.exp(energy-newEnergy)/temperature;
+			System.out.println(String.join(" ", "acceptance probability: " + String.format("%.8f", acceptanceProbability)
+					                          , "energy: " + String.format("%.8f", energy)
+					                          , "new energy: " + String.format("%.8f", newEnergy)
+					                          , "temp: " + String.format("%.8f", temperature)));
 		}
 		
 		return acceptanceProbability;

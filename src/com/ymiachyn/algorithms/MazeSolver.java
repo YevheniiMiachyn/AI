@@ -48,9 +48,7 @@ public class MazeSolver {
 			
 			//backtrack
 			vizited[x][y] = false;
-			
-			return false;
-		}
+	    }
 			
 		return false;
 	}
