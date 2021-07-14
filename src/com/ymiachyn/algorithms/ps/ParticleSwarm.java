@@ -17,6 +17,7 @@ public class ParticleSwarm {
 
 	public void solve() {
 		
+		//1) initialize particles
 		initializeSwarm();
 
 		//iterate max # of iterations
@@ -54,6 +55,7 @@ public class ParticleSwarm {
 					 */
 					particle.getPosition()[i] += particle.getVelocity()[i];
 
+					//update position to default max/min if out of bound
 					if (particle.getPosition()[i] < Constants.MIN) {
 						particle.getPosition()[i] = Constants.MIN;
 					}
@@ -63,7 +65,7 @@ public class ParticleSwarm {
 					}
 				}
 				
-				//update particle and if so - global best positions
+				//update particle and if global max - global best positions
 				if (Constants.f(particle.getPosition()) > Constants.f(particle.getBestPosition())) {
 					particle.setBestPosition(particle.getPosition());
 				}
@@ -72,7 +74,7 @@ public class ParticleSwarm {
 					System.arraycopy(particle.getBestPosition(), 0, this.globalBestSolution, 0, particle.getBestPosition().length);
 				}	
 			}
-			// >> to next iteration
+			// >> to next epoch 
 			++this.epochs;
 		}
 	}
@@ -134,6 +136,13 @@ public class ParticleSwarm {
 		}
 	}
 
+	/**
+	 * Generate random in range min-max
+	 * 
+	 * @param min
+	 * @param max
+	 * @return
+	 */
 	private double random(double min, double max) {
 		return min + (max - min) * Math.random();
 	}

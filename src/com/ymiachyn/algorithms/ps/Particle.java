@@ -2,9 +2,9 @@ package com.ymiachyn.algorithms.ps;
 
 public class Particle {
 
-	private double[] position; // xi
+	private double[] position; // xi -> (x, y) coordinates
 	private double[] velocity; // vi
-	private double[] bestPosition; // pi
+	private double[] bestPosition; // pi -> (x, y) coordinates
 
 	public Particle(double[] position, double[] velocity) {
 		
@@ -56,7 +56,7 @@ public class Particle {
 	}
 	
 	public String toString() {
-		return "Best position so far: " + this.bestPosition[0] + ","
+		return "Best position so far (x,y,z): " + this.bestPosition[0] + ","
 				+ this.bestPosition[1] + "," + this.bestPosition[2];
 	}
 }
