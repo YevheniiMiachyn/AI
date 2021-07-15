@@ -22,6 +22,7 @@ import com.ymiachyn.algorithms.DepthFirstSearch;
 import com.ymiachyn.algorithms.IterativeDeepeningDepthFirstSearch;
 import com.ymiachyn.algorithms.MazeSolver;
 import com.ymiachyn.algorithms.Vertex;
+import com.ymiachyn.algorithms.alphabeta.Game;
 import com.ymiachyn.algorithms.genetic.Constants;
 import com.ymiachyn.algorithms.genetic.GeneticAlgorithm;
 import com.ymiachyn.algorithms.genetic.Population;
@@ -45,8 +46,8 @@ public class Cockpit {
 		//fireTabuSearch();
 	    //fireSimulatedAnnealing();
 		//fireGeneticAlgorithm();
-		
-		fireParticleSwarmOptimization();
+		//fireParticleSwarmOptimization();
+		fireAlphaBeta();
 		
 		//fireHopfieldNetwork();
 		
@@ -55,6 +56,10 @@ public class Cockpit {
 		//fireBackpropagationNetworkIris();
 	}
 	
+	private static void fireAlphaBeta() {
+		new Game();
+	};
+		
 	private static void findMazeExit() {
 		int[][] maze = {
 			{1,1,0,0,0,1},	
