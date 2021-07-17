@@ -47,9 +47,9 @@ public class Cockpit {
 	    //fireSimulatedAnnealing();
 		//fireGeneticAlgorithm();
 		//fireParticleSwarmOptimization();
-		fireMinMax();
+		//fireMinMax();
 		
-		//fireHopfieldNetwork();
+		fireHopfieldNetwork();
 		
 		//fireSingleLayerNetwork();
 		//fireBackpropagationNetwork();
