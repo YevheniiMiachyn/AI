@@ -47,7 +47,7 @@ public class Cockpit {
 	    //fireSimulatedAnnealing();
 		//fireGeneticAlgorithm();
 		//fireParticleSwarmOptimization();
-		fireAlphaBeta();
+		fireMinMax();
 		
 		//fireHopfieldNetwork();
 		
@@ -56,7 +56,7 @@ public class Cockpit {
 		//fireBackpropagationNetworkIris();
 	}
 	
-	private static void fireAlphaBeta() {
+	private static void fireMinMax() {
 		new Game();
 	};
 		

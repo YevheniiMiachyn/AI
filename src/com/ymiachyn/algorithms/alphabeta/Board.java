@@ -23,15 +23,23 @@ public class Board {
 
 	public boolean isRunning() {
 		
-		if( isWinning(Player.COMPUTER) ) return false;
-		if( isWinning(Player.USER)) return false;
-		if( getEmptyCells().isEmpty() )return false;
+		if(isWinning(Player.COMPUTER) || isWinning(Player.USER) || getEmptyCells().isEmpty())
+		{
+			return false;
+		}
 		
 		return true;
     }
 
+	/**
+	 * Check if given player covered a line
+	 * 
+	 * @param player
+	 * @return
+	 */
     public boolean isWinning(Player player) {
     	
+    	//checking diagonals
         if ( board[0][0] == player && board[1][1] == player && board[2][2] == player ) {
             return true;
         }
@@ -70,6 +78,11 @@ public class Board {
         return emptyCells;
     }
 
+    /**
+     * Assign player to specific cell
+     * @param point
+     * @param player
+     */
     public void move(Cell point, Player player) {
         board[point.getX()][point.getY()] = player;   
     }
@@ -137,18 +150,35 @@ public class Board {
         return list.get(index);
     }
  
+    /**
+     * 
+     * @param depth - how many layers in game tree (starts with root 0 )
+     * @param player
+     */
     public void callMinimax(int depth, Player player){
         rootValues.clear();
         minimax(depth, player);
     }
     
+    /**
+     * Min-max algorithm - calling it recursively
+     * 
+     * @param depth
+     * @param player
+     * @return
+     */
     public int minimax(int depth, Player player) {
 
+    	/**
+    	 * checking leaf nodes when no more moves
+    	 * and can determine the outcome
+    	 */
         if (isWinning(Player.COMPUTER)) return +1;
         if (isWinning(Player.USER)) return -1;
 
         List<Cell> availableCells = getEmptyCells();
         
+        //it's a draw
         if (availableCells.isEmpty()) return 0; 
 
         List<Integer> scores = new ArrayList<>(); 
@@ -157,18 +187,34 @@ public class Board {
             
         	Cell point = availableCells.get(i);  
 
-            if (player == Player.COMPUTER) { //X's turn select the highest from below minimax() call
+        	/**
+        	 * These return values for internal nodes in game tree
+        	 * Computer turn select the highest from below minimax() call
+        	 * Looking for max value if computer because it's from computer POV
+        	 */
+            if (player == Player.COMPUTER) 
+            { 
                 move(point, Player.COMPUTER); 
+                //depth first algorithm
                 int currentScore = minimax(depth + 1, Player.USER);
                 scores.add(currentScore);
 
+                /**
+                 * +1 computer move can win
+                 * -1 computer move can lose - avoid this move
+                 */
                 if (depth == 0) {
                 	point.setMinimaxValue(currentScore);
                     rootValues.add(point);
                 }    	
-                
-            } else if (player == Player.USER) {//O's turn select the lowest from below minimax() call
+              /**
+               * O's turn select the lowest from below minimax() call  
+               * Looking for min if user because it's for user from computer POV
+               */
+            } else if (player == Player.USER)
+            {
                 move(point, Player.USER); 
+                //minmax algorithm run only for computer
                 scores.add(minimax(depth + 1, Player.COMPUTER));
             }
             
