@@ -21,6 +21,7 @@ public class Perceptron {
 			weights[i] = (float)(Math.random() - 0.5);
 	}
 	
+	//train model
 	public void train(float learningRate) {
 		
 		float totalError = 1;
@@ -31,6 +32,7 @@ public class Perceptron {
 			
 			for(int i=0;i<output.length;++i) {
 				
+				//prediction made by NN
 				float calculatedOutput = calculateOutput(input[i]);
 				float error = output[i]-calculatedOutput;
 				

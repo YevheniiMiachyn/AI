@@ -49,9 +49,9 @@ public class Cockpit {
 		//fireParticleSwarmOptimization();
 		//fireMinMax();
 		
-		fireHopfieldNetwork();
+		//fireHopfieldNetwork();
 		
-		//fireSingleLayerNetwork();
+		fireSingleLayerNetwork();
 		//fireBackpropagationNetwork();
 		//fireBackpropagationNetworkIris();
 	}
@@ -234,10 +234,10 @@ public class Cockpit {
 		 * train to predict for boolean operator OR
 		 * 
 		 * Not going to work for XOR because XOR is non-linear function
-		 * Single layer Neural Networks works only for linear functions
+		 * Single layer Neural Networks (without hidden layer) works only for linear functions
 		 */
 		float[][] input = { {0,0}, {0,1}, {1,0}, {1,1} };
-		float[] output = {0,1,1,0};
+		float[] output = {0,0,0,1};
 		
 		Perceptron perceptron = new Perceptron(input, output);
 		perceptron.train(0.21f);
