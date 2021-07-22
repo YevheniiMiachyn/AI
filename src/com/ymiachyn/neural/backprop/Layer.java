@@ -10,15 +10,20 @@ public class Layer {
 	 private float[] output;
 	 private float[] input;
 	 private float[] weights;
+	 
+	 //represents change weights of previous iterations
 	 private float[] dWeights;
+	 
 	 private Random random;
 	 
 	 public Layer(int inputSize, int outputSize) {
 		// +1 for bias node
 		input = new float[inputSize + 1];
 		output = new float[outputSize];
+		//# of weights between neurons of layers (including bias neuron)
 		weights = new float[(inputSize + 1) * outputSize];
 		dWeights = new float[weights.length];
+		
 		random = new Random();
 		
 		initWeights();
@@ -27,7 +32,7 @@ public class Layer {
 	private void initWeights() {
 		//generated weights in range [-2,2]
 		for (int i = 0; i < weights.length; i++)
-			weights[i] = (random.nextFloat() - 0.5f) * 4f;
+			weights[i] = (random.nextFloat() - 0.5f) * 4f;//[-2,2]
 	}
 	
 	public float[] run(float[] inputArray) {

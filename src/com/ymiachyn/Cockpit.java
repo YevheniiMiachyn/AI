@@ -51,8 +51,8 @@ public class Cockpit {
 		
 		//fireHopfieldNetwork();
 		
-		fireSingleLayerNetwork();
-		//fireBackpropagationNetwork();
+		//fireSingleLayerNetwork();
+		fireBackpropagationNetwork();
 		//fireBackpropagationNetworkIris();
 	}
 	
@@ -184,6 +184,9 @@ public class Cockpit {
 	}
 
 
+	/**
+	 * Also feed forward network
+	 */
 	private static void fireBackpropagationNetwork() {
 		
 		/*
@@ -226,7 +229,8 @@ public class Cockpit {
 	/**
 	 * Just to demonstrate main idea of neural network
 	 * we train it to 'predict' correct result instead
-	 * The example is simple, but it predicts - not matching like key/value!
+	 * The example is simple, but it predicts basing on trained NN
+	 * - not matching like key/value!
 	 *
 	 */
 	private static void fireSingleLayerNetwork() {

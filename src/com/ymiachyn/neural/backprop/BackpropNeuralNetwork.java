@@ -18,7 +18,9 @@ public class BackpropNeuralNetwork {
 	public BackpropNeuralNetwork(int inputSize, int hiddenSize, int outputSize) {
 		//2 layers for edge-weights for 3 layer neural network
 		layers = new Layer[2];
+		//hold edges between input and hidden layers
 		layers[0] = new Layer(inputSize, hiddenSize);
+		//hold edges between hidden and output layers
 		layers[1] = new Layer(hiddenSize, outputSize);
 	}
 	
@@ -34,6 +36,11 @@ public class BackpropNeuralNetwork {
 		return layers[idx];
 	}
 	
+	/**
+	 * return activation of the given layer
+	 * @param input
+	 * @return
+	 */
 	public float[] run(float[] input) {
 		
 		float[] activations = input;
@@ -57,6 +64,10 @@ public class BackpropNeuralNetwork {
 			error[i] = targetOutput[i] - calculatedOutput[i];
 		}
 		
+		/*
+		 * using backpropagation - in backward manner from output to hidden to input layer
+		 * keep calculation error
+		 */
 		for (int i = layers.length - 1; i >= 0; i--) {
 			error = layers[i].train(error, learningRate, monentum);
 		}
