@@ -52,8 +52,8 @@ public class Cockpit {
 		//fireHopfieldNetwork();
 		
 		//fireSingleLayerNetwork();
-		fireBackpropagationNetwork();
-		//fireBackpropagationNetworkIris();
+		//fireBackpropagationNetwork();
+		fireBackpropagationNetworkIris();
 	}
 	
 	private static void fireMinMax() {
